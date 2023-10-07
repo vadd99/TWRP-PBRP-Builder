@@ -101,7 +101,7 @@ jobs:
       
     - name: Building OrangeFox
       run: |
-        cd ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+        cd ${GITHUB_WORKSPACE}/Recovery
         set +e
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
