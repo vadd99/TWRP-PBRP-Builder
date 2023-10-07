@@ -7,6 +7,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
+      RECOVERY_NAME:
+         discription: 'Name of the recovery you want to build'
+         required: true
+         default: 'TWRP'
+         type: choice
+         options:
+         - TWRP
+         - PBRP
       MANIFEST_BRANCH:
         description: 'OrangeFox Branch'
         required: true
