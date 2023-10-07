@@ -84,7 +84,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         git config --global user.name "xeroxero8x"
         git config --global user.email "xeroxero8@outlook.com"
-        repo inti --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb --branch ${{ github.event.inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb --branch ${{ github.event.inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync
     - name: Clone Device Tree
       run: |
