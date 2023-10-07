@@ -118,7 +118,7 @@ jobs:
         else
             echo "Recovery out directory is empty."
         fi
-        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.tar ]; then
+        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/PBRP*.zip ]; then
             echo "CHECK_ZIP_IS_OK=true" >> $GITHUB_ENV
         else
             echo "Recovery out directory is empty."
@@ -130,7 +130,7 @@ jobs:
       with:
         files: |
           Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.img
-          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.zip
+          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/PBRP*.zip
         name: Unofficial ${{ github.event.inputs.RECOVERY_NAME}} for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
