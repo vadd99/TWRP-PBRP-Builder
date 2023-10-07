@@ -38,7 +38,7 @@ on:
       DEVICE_NAME:
         description: 'Specify your Device Codename.'
         required: true
-        default: 'sweet'
+        default: 'sweet_k6a'
       BUILD_TARGET:
         description: 'Specify your Build Target'
         required: true
@@ -96,16 +96,14 @@ jobs:
       id: fox_branch
       with:
         cond: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-12.1' || github.event.inputs.MANIFEST_BRANCH == 'android-12.1' }}
-        if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka pbrp ${{ github.event.inputs.BUILD_TARGET }}image
+        if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka pbrp
         if_false: lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka ${{ github.event.inputs.BUILD_TARGET }}image
       
     - name: Building Recovery
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
-        set +e
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        set -e
         ${{ steps.fox_branch.outputs.value }}
 
     - name: Set Build Date # For Build Date Info, currently using Asia/Manila
@@ -115,12 +113,12 @@ jobs:
     - name: Check if Recovery Exist
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
-        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.img ]; then
+        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.img ]; then
             echo "CHECK_IMG_IS_OK=true" >> $GITHUB_ENV
         else
             echo "Recovery out directory is empty."
         fi
-        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.zip ]; then
+        if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.tar ]; then
             echo "CHECK_ZIP_IS_OK=true" >> $GITHUB_ENV
         else
             echo "Recovery out directory is empty."
@@ -131,11 +129,11 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.img
-          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.zip
+          Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.img
+          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.zip
         name: Unofficial ${{ github.event.inputs.RECOVERY_NAME}} for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
-          Build: fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+          Build: ${{ github.event.inputs.MANIFEST_BRANCH }}
           Device: ${{ github.event.inputs.DEVICE_TREE }}/tree/${{ github.event.inputs.DEVICE_TREE_BRANCH }}
 
