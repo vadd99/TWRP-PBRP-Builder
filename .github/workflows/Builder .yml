@@ -84,11 +84,11 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         git config --global user.name "xeroxero8x"
         git config --global user.email "xeroxero8@outlook.com"
-        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }} --path ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync
     - name: Clone Device Tree
       run: |
-        cd ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+        cd ${GITHUB_WORKSPACE}/Recovery
         git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
 
     - name: Check Manifest Branch
@@ -96,7 +96,7 @@ jobs:
       id: fox_branch
       with:
         cond: ${{ github.event.inputs.MANIFEST_BRANCH == 'twrp-12.1' || github.event.inputs.MANIFEST_BRANCH == 'android-12.1' }}
-        if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka adbd ${{ github.event.inputs.BUILD_TARGET }}image
+        if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka pbrp ${{ github.event.inputs.BUILD_TARGET }}image
         if_false: lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka ${{ github.event.inputs.BUILD_TARGET }}image
       
     - name: Building OrangeFox
@@ -114,7 +114,7 @@ jobs:
 
     - name: Check if Recovery Exist
       run: |
-        cd ${GITHUB_WORKSPACE}/Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}
+        cd ${GITHUB_WORKSPACE}/Recovery
         if [ -f out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.img ]; then
             echo "CHECK_IMG_IS_OK=true" >> $GITHUB_ENV
         else
@@ -131,8 +131,8 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          Recovery/fox_${{ github.event.inputs.MANIFEST_BRANCH }}/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.img
-          Recovey/fox_${{ github.event.inputs.MANIFEST_BRANCH }}/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.zip
+          Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.img
+          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.RECOVERY_NAME}}*.zip
         name: Unofficial ${{ github.event.inputs.RECOVERY_NAME}} for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
