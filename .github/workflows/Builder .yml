@@ -99,7 +99,7 @@ jobs:
         if_true: lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka pbrp ${{ github.event.inputs.BUILD_TARGET }}image
         if_false: lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka ${{ github.event.inputs.BUILD_TARGET }}image
       
-    - name: Building OrangeFox
+    - name: Building Recovery
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
         set +e
