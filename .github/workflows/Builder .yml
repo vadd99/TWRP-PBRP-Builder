@@ -70,6 +70,8 @@ jobs:
       
     - name: Build Environment
       run: |
+        sudo apt update
+        sudo apt upgrade -y
         sudo apt install aria2 -y
         sudo apt install repo -y
         git clone https://gitlab.com/OrangeFox/misc/scripts
