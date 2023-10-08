@@ -72,7 +72,7 @@ jobs:
       run: |
         sudo apt install aria2 -y
         sudo apt install repo -y
-        git clone https://gitlab.com/OrangeFox/misc/scripts
+        git clone https://github.com/akhilnarang/scripts
         cd scripts
         sudo bash setup/android_build_env.sh
       
