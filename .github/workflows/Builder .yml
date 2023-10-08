@@ -70,18 +70,11 @@ jobs:
       
     - name: Build Environment
       run: |
-        sudo apt update
-        sudo apt upgrade -y
         sudo apt install aria2 -y
         sudo apt install repo -y
         git clone https://gitlab.com/OrangeFox/misc/scripts
         cd scripts
         sudo bash setup/android_build_env.sh
-    - name: Install OpenJDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'zulu'
-        java-version: '8'
       
     - name: Set-up Manifest
       run: |
@@ -90,7 +83,7 @@ jobs:
         git config --global user.name "xeroxero8x"
         git config --global user.email "xeroxero8@outlook.com"
         repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
-        repo sync -j8 --force-sync
+        repo sync
     - name: Clone Device Tree
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
@@ -100,7 +93,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka pbrp -j8
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && make clean && mka pbrp -j6
 
     - name: Set Build Date # For Build Date Info, currently using Asia/Manila
       run: |
