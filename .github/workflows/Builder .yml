@@ -17,7 +17,7 @@ on:
       MANIFEST_BRANCH:
         description: 'Recovery  Branch'
         required: true
-        default: 'android-12.1'
+6        default: 'android-12.1'
         type: choice
         options:
         - android-12.1
@@ -82,7 +82,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         git config --global user.name "xeroxero8x"
         git config --global user.email "xeroxero8@outlook.com"
-        repo init --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b ${{ github.event.inputs.MANIFEST_BRANCH }}
         repo sync
     - name: Clone Device Tree
       run: |
@@ -95,7 +95,7 @@ jobs:
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && mka pbrp
 
-    - name: Set Build Date # For Build Date Info, currently using Asia/Manila
+    - name: Set Build Date # For Build Date Info, currently using Asia/Dhaka
       run: |
         echo "BUILD_DATE=$(TZ=Asia/Dhaka date +%Y%m%d)" >> $GITHUB_ENV
 
