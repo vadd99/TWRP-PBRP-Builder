@@ -17,7 +17,7 @@ on:
       MANIFEST_BRANCH:
         description: 'Recovery  Branch'
         required: true
-6        default: 'android-12.1'
+        default: 'android-12.1'
         type: choice
         options:
         - android-12.1
@@ -125,4 +125,3 @@ jobs:
         body: |
           Build: ${{ github.event.inputs.MANIFEST_BRANCH }}
           Device: ${{ github.event.inputs.DEVICE_TREE }}/tree/${{ github.event.inputs.DEVICE_TREE_BRANCH }}
-
