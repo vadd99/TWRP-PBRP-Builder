@@ -11,9 +11,6 @@ on:
          discription: 'Name of the recovery you want to build'
          required: true
          default: 'PBRP'
-         type: choice
-         options:
-         - PBRP
       MANIFEST_BRANCH:
         description: 'Recovery  Branch'
         required: true
@@ -24,7 +21,7 @@ on:
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
-        default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a-pbrp'
+        default: 'https://github.com/xeroxero8x/device_xiaomi_sweet_k6a'
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
@@ -93,7 +90,7 @@ jobs:
         cd ${GITHUB_WORKSPACE}/Recovery
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        lunch omni_${{ github.event.inputs.DEVICE_NAME }}-eng && mka pbrp
+        lunch twrp_${{ github.event.inputs.DEVICE_NAME }}-eng && mka pbrp
 
     - name: Set Build Date # For Build Date Info, currently using Asia/Dhaka
       run: |
