@@ -84,7 +84,8 @@ jobs:
     - name: Clone Device Tree
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
-        git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }}  ${{ github.event.inputs.DEVICE_PATH }}     
+        git clone ${{ github.event.inputs.DEVICE_TREE }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }}  ${{ github.event.inputs.DEVICE_PATH }}
+        git clone https://github.com/vadd99/gflags ./external/gflags
     - name: Building Recovery
       run: |
         cd ${GITHUB_WORKSPACE}/Recovery
