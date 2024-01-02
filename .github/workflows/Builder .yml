@@ -116,8 +116,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery*.img
-          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/PBRP*.zip
+          Recovery/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/vendor_boot.img
+          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
+          Recovey/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*vendor*.img
         name: Unofficial ${{ github.event.inputs.RECOVERY_NAME}} for ${{ github.event.inputs.DEVICE_NAME }} // ${{ env.BUILD_DATE }}
         tag_name: ${{ github.run_id }}
         body: |
